@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: angular-deployment-finnalee
+spec:
+  selector:
+    matchLabels:
+      app: angular
+  replicas: 5
+  template:
+    metadata:
+      labels:
+        app: angular
+    spec:
+      containers:
+      - name: angular
+        image: thilanka998/ng-docker-k8s-docfinal:1.0 # Updated image tag
+        ports:
+        - containerPort: 80
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: angular-service
+spec:
+  selector:
+    app: angular
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 80
+    nodePort: 31000
+  type: NodePort
